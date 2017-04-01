@@ -1,15 +1,32 @@
-## Put comments here that give an overall description of what your
-## functions do
+## This is the code for the programming assignment of week 3.
 
-## Write a short comment describing this function
+## Holds variables in memory for:
+## - The input matrix
+## - It's inverse (when required)
 
 makeCacheMatrix <- function(x = matrix()) {
+    i <- NULL
+    set <- function(y) {
+        x <<- y
+        i <<- NULL
+    }
+    get <- function() x
+    setInverse <- function(inverse) i <<- inverse
+    getInverse <- function() i
 
+    list(set=set, get=get, getInverse=getInverse, setInverse=setInverse)
 }
 
 
-## Write a short comment describing this function
+## Calculates the inverse of the matrix in `x` if there's no cached result
+## already. Otherwise, return the cached version.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+        inverse <- x$getInverse()
+        if (is.null(inverse)) {
+            inverse <- solve(x$get(), ...)
+            x$setInverse(inverse)
+        }
+
+        inverse
 }
